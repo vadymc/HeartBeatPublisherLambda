@@ -1,0 +1,29 @@
+language: java
+
+jdk:
+- oraclejdk11
+
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+
+install:
+- "./gradlew build -x check"
+
+jobs:
+  include:
+  - stage: test
+    env:
+    - SPRING_PROFILES_INCLUDE=travis
+    script: "./gradlew check --scan --info"
+
+env:
+  global:
+  - secure: Mpcf29cJD2NAYZWrAw2ikxhj6VfD/7U4mXVWqIwkorDuppAxgBoukLt2TAyk63bEj4bzhJS0Y5mtKx07IpvL/BI/LRLlRnYR994EPRtp6G2uk7hBTGv+6D98VtNy6dKjIrij6KmhG2nvv4MvBPdVjPQ/fyvuL/4vjOZ6HIUuvA9STzdh0IUP8n77mZnehVZAETgs0FCVAF5g0Wtaq+wZJyYa0AzaSChE3DD4SbGEYCY9XCJ2e+AH+V3OcYis/b4WdFydnZL5tFHCpvn6Ib5dQQXUexA7d1cNIM6ig5CfUQCiGnVMriOTBOhFF+EAby2DLAr8YE6zaS7ob0YT0LpBXyO/MFW4wym+UgRxfJstj7S25p8HGbSFFzeM1FRl7TAq4LI4VIzIJRcWdcWCAXeIL3JIkpPPX6ts3C8ZDDNZ+EDxDaQS/1tVzoF5nXpwgQABqTZJIRdzDFzYyaegBNWo/jixDuKN4AM+FwnBaOvxJkfE/ANXKEo3alb05R6NALWrHonGKkTS2VkPI0kCSpiz6mbkxhZZ/GISIMv+np6WmrXB1Wd6LviOmPYuxFSEIW3sm51jaDlQfBxSdlcetgUkbxaryzWPxIctFLZ1O94F7eUPZWQ0lNV7BKXk7hYA2EYy6r0p/xUhMEq3lHn8flbtnoL5Ic6m7kN9r1Q6QINPW+g=
+  - secure: I/PBf2W9iALIwN2NIexJ0xaucwr+TQwGhqRdJCyBt0v9J6LcgKQ0iLQc4DMup4YkZEDjwMbD49UPdTUjE6x0prFz/gUJShGNZo6ZoykJLtoShBfXWGMAert1IzxMGZwgrL5y5yZ2ZU+gVckJ6w2b3xPoOAL8+WCo5nPj8gGgxIURiIU/j3yzZ2lQgaXMWxWRtGG4d1ZYX5O2MMvA2PXjFAb6MkEwFTe7aGSP3qXU5zq11MB/HlMCKfx0rKOBXKqQVayJH+OS8LZe/pnXxlz3S20XawTWCvjniJ31aEl1ecQaH6OXDGZ7RAcZn+GgDsV+aQXI0bYhDV1W7R83/ZWkovtdorj1bXot/Ps6/hwAX1I3sDW22aYsyRo2gj+xD/9mwcM1noMUdLm/N+hJs5nCGyIOXqZn2Wgm9ylzwRIA9T3gCgRTyPA0WnrRlY5Q896aC0FoWVoiqaAJ779Cb2Nrmfk2P2Dz6OdJikU5aieiVo0K9cuKOiGkUEriRsLN+K7pgSpyXwXMZVwybCCZhFNyudT/w44riUAZa9uW25ngxOodxYmpCKQ1szvmKgh1NBlR4+bp3cR7Jdj2FDi35sw1YWZIDKGGyPRR/4vKEEEklIEHVfzVPRuRWUeQB5SAAwmI5/NOSKpvQB/ioO4kysb9z/N3WcWR/D0NozV9u7826VI=
+  - secure: miXHokoMGK6sSq3xq/beZbkUPxoKs8zBJQQcc7qwRjKI4/IUWwzxGh1tV7TAFXVFNSnRfmiDvZxSefuBN8ghsob77zwFD8YFYJ9zwQZkAzFASIZDTG3bAWEp4+191IqA6PA3pGOLfwT6ZNnfhz2JdFX4OBta+t43QOgo4klaYciHGe0OnBKLQ4N8J5uJYZoj8MRSZsEkXdz+9mSp6W1+ub0dyJulS3CMEm/3y8DsCMGDvpvjcV/7Y3qKLmup9yLOWo9+B6eCdtAR9xmUauDF85qdOjXOV1m+mCbhdOUOHpgr0ZdQ8URjqD+Lo5kpsHJjjAOLucoh73FGlx8+tde9HRdMiMbOGCJ27qoHoUTRPw0OnTJJoIsk1/RioBN5Sj+HhMtihWJittDe7NEyXgf1900raHrImhpu+m6xyoAHnxcMKw1izRApSe0Ri+UajXOEpYD66CSz1T2DlauuAY5tezKUdpOcIwHkKQCBoni9tUYCwiE/QaLQT9Y7PHrFKEwouLHPfsLAcr986NZA7tdsC3X2BRznfAaZJcjOkSlPKvo6S2q9mhGEXFbQ5hPXCVc8+qhTfOwrYaRQBpnYOjSTs2GH82cpJIncmhgiUKREqiKAQMJ9YKErCBsWRX1632bb09EL/g35J/aYev8iNPqmMIAWBh5f1MYIwFZtN+PdniU=
