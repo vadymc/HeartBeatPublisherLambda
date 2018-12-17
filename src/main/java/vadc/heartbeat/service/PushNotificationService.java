@@ -54,8 +54,10 @@ public class PushNotificationService {
 
     private static String buildNotificationMessage(String event) {
         JsonObject jNotification = new JsonObject();
-        jNotification.addProperty("title", "Event");
-        jNotification.addProperty("body", event);
+        String title = event.substring(0, event.indexOf(']') + 1);
+        jNotification.addProperty("title", title);
+        String body = event.substring(event.indexOf(']') + 1);
+        jNotification.addProperty("body", body);
 
         JsonObject jMessage = new JsonObject();
         jMessage.add("notification", jNotification);
